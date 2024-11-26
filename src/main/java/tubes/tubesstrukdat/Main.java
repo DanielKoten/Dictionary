@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("dictionary.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/tubes/view/dictionary.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
         stage.setResizable(false);
