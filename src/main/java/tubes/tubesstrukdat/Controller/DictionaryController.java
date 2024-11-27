@@ -16,13 +16,15 @@ public class DictionaryController {
     @FXML
     public TextFlow textFlow;
     @FXML
+    private Button swapSign;
+    @FXML
     private TextField inputField;
     @FXML
     private VBox resultField;
     @FXML
     private VBox resultField1;
     @FXML
-    private ListView<String> riwayatListView;  // Menggunakan tipe data String untuk riwayat
+    private ListView<HistoryItem> riwayatListView;  // Menggunakan tipe data HistoryItem
 
     private Dictionary dictionary;
     private String selectedLanguage = "id";  // Default language is Indonesian
@@ -31,27 +33,40 @@ public class DictionaryController {
         dictionary = new Dictionary();
         dictionary.loadDefaultTranslations();
 
-        riwayatListView.setCellFactory(listView -> new ListCell<String>() {
+        riwayatListView.setCellFactory(listView -> new ListCell<HistoryItem>() {
             @Override
-            protected void updateItem(String item, boolean empty) {
+            protected void updateItem(HistoryItem item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
                     setStyle("-fx-background-color: transparent;");
                 } else {
-                    setText(item);
-                    // Set font untuk item ListView
-                    setFont(Font.font("Arial", 16)); // Ubah font di sini (ganti "Arial" dan ukuran 16 sesuai kebutuhan)
-                    setStyle("-fx-text-fill: blue; -fx-background-color: transparent;"); // Mengubah warna teks jika diperlukan
+                    setText(item.getText());  // Menampilkan teks
+                    setFont(Font.font("Tw Cen MT Condensed Extra Bold", 16)); // Ubah font di sini
+                    setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
 
                     setOnMouseEntered(event -> {
-                        setStyle("-fx-text-fill: blue; -fx-border-color: #2f6dae; -fx-border-width: 2px; -fx-background-color: transparent;");
+                        setStyle("-fx-text-fill: white; -fx-border-color: #2f6dae; -fx-border-width: 2px; -fx-background-color: transparent;");
                     });
 
                     setOnMouseExited(event -> {
-                        setStyle("-fx-text-fill: blue; -fx-border-color: transparent; -fx-border-width: 0px; -fx-background-color: transparent;");
+                        setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-border-width: 0px; -fx-background-color: transparent;");
                     });
                 }
+            }
+        });
+
+        // Menangani klik pada item ListView
+        riwayatListView.setOnMouseClicked(event -> {
+            // Mendapatkan item yang diklik
+            HistoryItem selectedItem = riwayatListView.getSelectionModel().getSelectedItem();
+
+            if (selectedItem != null) {
+                // Mendapatkan objek TranslationResult terkait dengan item yang diklik
+                TranslationResult translationResult = selectedItem.getTranslationResult();
+
+                // Menampilkan hasil terjemahan dan penjelasan sesuai item yang diklik
+                displayResult(translationResult);
             }
         });
     }
@@ -60,12 +75,14 @@ public class DictionaryController {
     @FXML
     private void onIdButtonClick() {
         selectedLanguage = "id";  // Pilih Bahasa Indonesia
+        swapSign.setVisible(false);
     }
 
     // Event handler untuk tombol EN
     @FXML
     private void onEnButtonClick() {
         selectedLanguage = "en";  // Pilih Bahasa Inggris
+        swapSign.setVisible(true);
     }
 
     // Fungsi untuk menangani pencarian kata
@@ -103,7 +120,8 @@ public class DictionaryController {
 
     // Menambahkan hasil terjemahan ke riwayat
     private void addToHistory(String word, TranslationResult translationResult) {
-        String historyItem = word + " - " + translationResult.getTranslation();
+        // Membuat HistoryItem baru yang menyimpan teks dan objek TranslationResult
+        HistoryItem historyItem = new HistoryItem(word + " - " + translationResult.getTranslation(), translationResult);
 
         // Menambahkan item ke ListView riwayat
         riwayatListView.getItems().add(0, historyItem);  // Menambah ke awal riwayat
@@ -113,4 +131,25 @@ public class DictionaryController {
             riwayatListView.getItems().remove(riwayatListView.getItems().size() - 1);  // Menghapus item terakhir jika melebihi 5
         }
     }
+
+    // Kelas pembungkus untuk menyimpan informasi teks dan TranslationResult (Agar ketika list riwayat dipencet, Result nya juga keubah)
+    public static class HistoryItem {
+        private final String text;
+        private final TranslationResult translationResult;
+
+        public HistoryItem(String text, TranslationResult translationResult) {
+            this.text = text;
+            this.translationResult = translationResult;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public TranslationResult getTranslationResult() {
+            return translationResult;
+        }
+    }
+
+
 }
