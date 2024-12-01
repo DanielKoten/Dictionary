@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import tubes.tubesstrukdat.Models.Dictionary;
 import tubes.tubesstrukdat.Models.TranslationResult;
+import tubes.tubesstrukdat.Models.VideoUtils;
 
 public class DictionaryController {
     @FXML
@@ -93,6 +94,12 @@ public class DictionaryController {
             // Lakukan terjemahan sesuai bahasa yang dipilih
             TranslationResult translationResult = dictionary.translate(word, selectedLanguage);
             displayResult(translationResult);
+
+            if (word.equalsIgnoreCase("landak")) {
+                VideoUtils.playVideoFromResources("/videos/landak.mp4");
+            } else if (word.equalsIgnoreCase("paham")) {
+                VideoUtils.playVideoFromResources("/videos/paham.mp4");
+            }
 
             // Menambahkan hasil terjemahan ke dalam riwayat
             addToHistory(word, translationResult);

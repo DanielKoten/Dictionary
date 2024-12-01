@@ -1,7 +1,7 @@
 module tubes.tubesstrukdat {
     requires javafx.controls;
     requires javafx.fxml;
-
+    requires javafx.media;
 
     opens tubes.tubesstrukdat to javafx.fxml;
     exports tubes.tubesstrukdat;

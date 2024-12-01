@@ -1,5 +1,14 @@
 package tubes.tubesstrukdat.Models;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+import java.io.File;
+
 public class Node {
     private String key; // Kata asli
     private String value; // Terjemahan
@@ -80,4 +89,11 @@ public class Node {
     public void setRed(boolean red) {
         isRed = red;
     }
+
+    public void playGimmick() {
+        if (key.equalsIgnoreCase("landak")) {
+            VideoUtils.playVideoFromResources("/videos/landak.mp4");
+        }
+    }
+
 }

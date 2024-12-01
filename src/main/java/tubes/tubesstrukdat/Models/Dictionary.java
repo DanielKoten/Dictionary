@@ -14,6 +14,7 @@ public class Dictionary {
         dictionaryTree.insert("cat", "kucing", "A small domesticated carnivorous mammal with soft fur, a short snout, and retractile claws.", "Mamalia karnivora kecil yang memiliki bulu lembut, moncong pendek, dan cakar yang dapat ditarik.");
         dictionaryTree.insert("banana", "pisang", "A long curved fruit that grows in clusters and has soft pulpy flesh and yellow skin when ripe.", "Buah panjang yang tumbuh berkelompok dengan daging buah lembut dan kulit kuning saat matang.");
         dictionaryTree.insert("chicken", "ayam", "A domestic fowl kept for its eggs or meat, especially a young one.", "Unggas yang dipelihara untuk telurnya atau dagingnya, terutama yang muda.");
+        dictionaryTree.insert("hedgehog", "landak", "A rodents that have sharp spines and thick hair", "Hewan pengerat yang memiliki duri tajam dan rambut tebal");
     }
 
     public TranslationResult translate(String word, String language) {
